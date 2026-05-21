@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @State private var useLetters = true
     @State private var useNumbers = true
-    @State private var useSpecialChars = false
+    @State private var useSpecialChars = true
     @State private var length = 11
     @State private var password = ""
     @State private var copied = false
@@ -47,30 +47,7 @@ struct ContentView: View {
                         set: { length = Int($0) }
                     ), in: Double(minLength)...Double(maxLength), step: 1)
                 }
-
-                Section("Generated Password") {
-                    if password.isEmpty {
-                        Text("Tap Generate to create a password")
-                            .foregroundStyle(.secondary)
-                    } else {
-                        Text(password)
-                            .font(.system(.body, design: .monospaced))
-                            .textSelection(.enabled)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-
-                        Button {
-                            UIPasteboard.general.string = password
-                            copied = true
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                                copied = false
-                            }
-                        } label: {
-                            Label(copied ? "Copied!" : "Copy to Clipboard",
-                                  systemImage: copied ? "checkmark" : "doc.on.doc")
-                        }
-                    }
-                }
-
+                
                 Section {
                     Button {
                         password = generatePassword()
@@ -82,6 +59,39 @@ struct ContentView: View {
                     }
                     .disabled(!canGenerate)
                 }
+
+                Section("Generated Password") {
+                    if password.isEmpty {
+                        Text("Tap Generate to create a password")
+                            .foregroundStyle(.secondary)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .padding(.vertical, 8)
+                    } else {
+                        ZStack(alignment: .bottomTrailing) {
+                            Text(password)
+                                .font(.custom("JetBrainsMono-ExtraLight", size: 32))
+                                .textSelection(.enabled)
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .multilineTextAlignment(.center)
+                                .padding()
+
+                            Button {
+                                UIPasteboard.general.string = password
+                                copied = true
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                    copied = false
+                                }
+                            } label: {
+                                Image(systemName: copied ? "checkmark" : "doc.on.doc")
+                                    .foregroundStyle(copied ? .green : .secondary)
+                                    .contentTransition(.symbolEffect(.replace))
+                            }
+                            .buttonStyle(.plain)
+                            .padding(12)
+                        }
+                    }
+                }
+
             }
             .navigationTitle("Password Generator")
         }
