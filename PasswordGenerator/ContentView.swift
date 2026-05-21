@@ -60,14 +60,14 @@ struct ContentView: View {
                     .disabled(!canGenerate)
                 }
 
-                Section("Generated Password") {
+                Section {
                     if password.isEmpty {
                         Text("Tap Generate to create a password")
                             .foregroundStyle(.secondary)
                             .frame(maxWidth: .infinity, alignment: .center)
                             .padding(.vertical, 8)
                     } else {
-                        ZStack(alignment: .bottomTrailing) {
+                        VStack {
                             Text(password)
                                 .font(.custom("JetBrainsMono-ExtraLight", size: 32))
                                 .textSelection(.enabled)
