@@ -18,10 +18,10 @@ struct ContentView: View {
     private let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
     private let numbers = "0123456789"
     private let specialChars = "!@#$%^&*()-_=+[]{}|;:,.<>?"
-    
+
     private let maxLength = 20
     private let minLength = 6
-    
+
     var canGenerate: Bool {
         useLetters || useNumbers || useSpecialChars
     }
@@ -30,9 +30,9 @@ struct ContentView: View {
         NavigationStack {
             Form {
                 Section("Character Types") {
-                    Toggle("Letters (A–Z, a–z)", isOn: $useLetters)
-                    Toggle("Numbers (0–9)", isOn: $useNumbers)
-                    Toggle("Special Characters (!@#…)", isOn: $useSpecialChars)
+                    Toggle("Letters (A-Z, a-z)", isOn: $useLetters)
+                    Toggle("Numbers (0-9)", isOn: $useNumbers)
+                    Toggle("Special Characters (!@#...)", isOn: $useSpecialChars)
                 }
 
                 Section("Length") {
